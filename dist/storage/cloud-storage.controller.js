@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CloudStorageController = void 0;
 const common_1 = require("@nestjs/common");
 const generate_presigned_url_dto_1 = require("../storage/dto/generate-presigned-url.dto");
+const copy_file_dto_1 = require("../storage/dto/copy-file.dto");
 let CloudStorageController = class CloudStorageController {
     constructor(cloudStorageService) {
         this.cloudStorageService = cloudStorageService;
@@ -22,6 +23,25 @@ let CloudStorageController = class CloudStorageController {
     async generatePresignedUrl(dto) {
         const { url, fields } = await this.cloudStorageService.generatePresignedUrl(dto);
         return { url, fields };
+    }
+    async deleteFile(key) {
+        await this.cloudStorageService.deleteFile('', key);
+        return {
+            success: true,
+            message: `File ${key} deleted successfully`,
+            deletedKey: key,
+            timestamp: new Date().toISOString(),
+        };
+    }
+    async copyFile(copyFileDto) {
+        await this.cloudStorageService.copyFile(copyFileDto.sourceBucket || '', copyFileDto.sourceKey, copyFileDto.destinationKey, copyFileDto.destinationBucket);
+        return {
+            success: true,
+            message: 'File copied successfully',
+            sourceKey: copyFileDto.sourceKey,
+            destinationKey: copyFileDto.destinationKey,
+            timestamp: new Date().toISOString(),
+        };
     }
 };
 exports.CloudStorageController = CloudStorageController;
@@ -32,6 +52,22 @@ __decorate([
     __metadata("design:paramtypes", [generate_presigned_url_dto_1.GeneratePresignedUrlDto]),
     __metadata("design:returntype", Promise)
 ], CloudStorageController.prototype, "generatePresignedUrl", null);
+__decorate([
+    (0, common_1.Delete)('files/:key'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Param)('key')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], CloudStorageController.prototype, "deleteFile", null);
+__decorate([
+    (0, common_1.Post)('files/copy'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [copy_file_dto_1.CopyFileDto]),
+    __metadata("design:returntype", Promise)
+], CloudStorageController.prototype, "copyFile", null);
 exports.CloudStorageController = CloudStorageController = __decorate([
     (0, common_1.Controller)('storage'),
     __param(0, (0, common_1.Inject)('CloudStorageService')),
