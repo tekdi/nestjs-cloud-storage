@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CloudStorageController = void 0;
 const common_1 = require("@nestjs/common");
 const generate_presigned_url_dto_1 = require("../storage/dto/generate-presigned-url.dto");
-const copy_file_dto_1 = require("../storage/dto/copy-file.dto");
+const copy_file_dto_1 = require("./dto/copy-file.dto");
 let CloudStorageController = class CloudStorageController {
     constructor(cloudStorageService) {
         this.cloudStorageService = cloudStorageService;
@@ -25,7 +25,7 @@ let CloudStorageController = class CloudStorageController {
         return { url, fields };
     }
     async deleteFile(key) {
-        await this.cloudStorageService.deleteFile('', key);
+        await this.cloudStorageService.deleteFile(key);
         return {
             success: true,
             message: `File ${key} deleted successfully`,
@@ -34,7 +34,7 @@ let CloudStorageController = class CloudStorageController {
         };
     }
     async copyFile(copyFileDto) {
-        await this.cloudStorageService.copyFile(copyFileDto.sourceBucket || '', copyFileDto.sourceKey, copyFileDto.destinationKey, copyFileDto.destinationBucket);
+        await this.cloudStorageService.copyFile(copyFileDto.sourceKey, copyFileDto.destinationKey);
         return {
             success: true,
             message: 'File copied successfully',
@@ -53,9 +53,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CloudStorageController.prototype, "generatePresignedUrl", null);
 __decorate([
-    (0, common_1.Delete)('files/:key'),
+    (0, common_1.Delete)('files'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Param)('key')),
+    __param(0, (0, common_1.Query)('key')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

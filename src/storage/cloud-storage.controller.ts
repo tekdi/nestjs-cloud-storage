@@ -1,4 +1,4 @@
-import { Controller, Post, Delete, Body, Param, Inject, HttpCode, HttpStatus, Query } from '@nestjs/common';
+import { Controller, Post, Delete, Body, Inject, HttpCode, HttpStatus, Query } from '@nestjs/common';
 import { CloudStorageService } from '../storage/interfaces/cloud-storage.interface';
 import { GeneratePresignedUrlDto } from '../storage/dto/generate-presigned-url.dto';
 import { CopyFileDto } from './dto/copy-file.dto';

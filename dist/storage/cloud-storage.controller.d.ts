@@ -1,6 +1,6 @@
 import { CloudStorageService } from '../storage/interfaces/cloud-storage.interface';
 import { GeneratePresignedUrlDto } from '../storage/dto/generate-presigned-url.dto';
-import { CopyFileDto } from '../storage/dto/copy-file.dto';
+import { CopyFileDto } from './dto/copy-file.dto';
 export declare class CloudStorageController {
     private readonly cloudStorageService;
     constructor(cloudStorageService: CloudStorageService);

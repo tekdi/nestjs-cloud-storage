@@ -69,9 +69,9 @@ export class AwsS3Service implements CloudStorageService {
    * @returns Promise<void>
    */
   async deleteFile(key: string): Promise<void> {
+    const bucketName = this.bucket;
+    
     try {
-      const bucketName = this.bucket;
-      
       const command = new DeleteObjectCommand({
         Bucket: bucketName,
         Key: key,
@@ -80,7 +80,7 @@ export class AwsS3Service implements CloudStorageService {
       await this.s3Client.send(command);
       this.logger.log(`File deleted successfully: ${key} from bucket: ${bucketName}`);
     } catch (error) {
-      this.logger.error(`Failed to delete file ${key} from bucket ${bucket}:`, error);
+      this.logger.error(`Failed to delete file ${key} from bucket ${bucketName}:`, error);
       throw new Error(`Failed to delete file: ${error.message}`);
     }
   }

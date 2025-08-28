@@ -45,9 +45,9 @@ let AwsS3Service = AwsS3Service_1 = class AwsS3Service {
         });
         return { url, fields };
     }
-    async deleteFile(bucket, key) {
+    async deleteFile(key) {
+        const bucketName = this.bucket;
         try {
-            const bucketName = bucket || this.bucket;
             const command = new client_s3_1.DeleteObjectCommand({
                 Bucket: bucketName,
                 Key: key,
@@ -56,14 +56,14 @@ let AwsS3Service = AwsS3Service_1 = class AwsS3Service {
             this.logger.log(`File deleted successfully: ${key} from bucket: ${bucketName}`);
         }
         catch (error) {
-            this.logger.error(`Failed to delete file ${key} from bucket ${bucket}:`, error);
+            this.logger.error(`Failed to delete file ${key} from bucket ${bucketName}:`, error);
             throw new Error(`Failed to delete file: ${error.message}`);
         }
     }
-    async copyFile(bucket, sourceKey, destinationKey, destinationBucket) {
+    async copyFile(sourceKey, destinationKey) {
         try {
-            const sourceBucketName = bucket || this.bucket;
-            const destBucketName = destinationBucket || sourceBucketName;
+            const sourceBucketName = this.bucket;
+            const destBucketName = this.bucket;
             const command = new client_s3_1.CopyObjectCommand({
                 Bucket: destBucketName,
                 CopySource: `${sourceBucketName}/${sourceKey}`,
