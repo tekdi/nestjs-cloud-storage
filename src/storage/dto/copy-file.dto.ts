@@ -8,12 +8,4 @@ export class CopyFileDto {
   @IsString()
   @IsNotEmpty()
   destinationKey: string;
-
-  @IsString()
-  @IsOptional()
-  sourceBucket?: string;
-
-  @IsString()
-  @IsOptional()
-  destinationBucket?: string;
 }
