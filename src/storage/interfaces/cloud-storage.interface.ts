@@ -13,6 +13,6 @@ export interface CloudStorageConfig {
 
 export interface CloudStorageService {
   generatePresignedUrl(options: GeneratePresignedUrlDto): Promise<{ url: string; fields: Record<string, string> }>;
-  deleteFile(bucket: string, key: string): Promise<void>;
-  copyFile(bucket: string, sourceKey: string, destinationKey: string, destinationBucket?: string): Promise<void>;
+  deleteFile(key: string): Promise<void>;
+  copyFile(sourceKey: string, destinationKey: string): Promise<void>;
 } 

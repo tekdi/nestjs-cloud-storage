@@ -1,7 +1,7 @@
-import { Controller, Post, Delete, Body, Param, Inject, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Delete, Body, Param, Inject, HttpCode, HttpStatus, Query } from '@nestjs/common';
 import { CloudStorageService } from '../storage/interfaces/cloud-storage.interface';
 import { GeneratePresignedUrlDto } from '../storage/dto/generate-presigned-url.dto';
-import { CopyFileDto } from '../storage/dto/copy-file.dto';
+import { CopyFileDto } from './dto/copy-file.dto';
 
 @Controller('storage')
 export class CloudStorageController {
@@ -21,10 +21,10 @@ export class CloudStorageController {
    * @param key - File key/path in the bucket
    * @returns Success message
    */
-  @Delete('files/:key')
+  @Delete('files')
   @HttpCode(HttpStatus.OK)
-  async deleteFile(@Param('key') key: string) {
-    await this.cloudStorageService.deleteFile('', key);
+  async deleteFile(@Query('key') key: string) {
+    await this.cloudStorageService.deleteFile(key);
     
     return {
       success: true,
@@ -43,10 +43,8 @@ export class CloudStorageController {
   @HttpCode(HttpStatus.OK)
   async copyFile(@Body() copyFileDto: CopyFileDto) {
     await this.cloudStorageService.copyFile(
-      copyFileDto.sourceBucket || '',
       copyFileDto.sourceKey,
-      copyFileDto.destinationKey,
-      copyFileDto.destinationBucket
+      copyFileDto.destinationKey
     );
     
     return {

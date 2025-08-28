@@ -68,9 +68,9 @@ export class AwsS3Service implements CloudStorageService {
    * @param key - File key/path in the bucket
    * @returns Promise<void>
    */
-  async deleteFile(bucket: string, key: string): Promise<void> {
+  async deleteFile(key: string): Promise<void> {
     try {
-      const bucketName = bucket || this.bucket;
+      const bucketName = this.bucket;
       
       const command = new DeleteObjectCommand({
         Bucket: bucketName,
@@ -94,14 +94,12 @@ export class AwsS3Service implements CloudStorageService {
    * @returns Promise<void>
    */
   async copyFile(
-    bucket: string, 
     sourceKey: string, 
     destinationKey: string,
-    destinationBucket?: string
   ): Promise<void> {
     try {
-      const sourceBucketName = bucket || this.bucket;
-      const destBucketName = destinationBucket || sourceBucketName;
+      const sourceBucketName = this.bucket;
+      const destBucketName = this.bucket;
 
       const command = new CopyObjectCommand({
         Bucket: destBucketName,
