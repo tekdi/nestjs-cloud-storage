@@ -1,4 +1,4 @@
-# @vinayak-patil/cloud-storage
+# @tekdi/nestjs-cloud-storage
 
 A NestJS package for cloud storage operations with presigned URL support. Currently supports AWS S3, with extensibility for other cloud providers.
 
@@ -17,7 +17,7 @@ This package now includes pre-built TypeScript declarations and compiled JavaScr
 ### 📦 Installation (Updated)
 
 ```bash
-npm install @vinayak-patil/cloud-storage
+npm install @tekdi/nestjs-cloud-storage
 ```
 
 **No postinstall scripts needed in your package.json!**
@@ -35,14 +35,14 @@ npm install @vinayak-patil/cloud-storage
 ## Installation
 
 ```bash
-npm install @vinayak-patil/cloud-storage
+npm install @tekdi/nestjs-cloud-storage
 ```
 
 OR add to your `package.json`:
 ```json
 {
   "dependencies": {
-    "@vinayak-patil/cloud-storage": "^1.0.1"
+    "@tekdi/nestjs-cloud-storage": "^1.0.1"
   }
 }
 ```
@@ -54,7 +54,7 @@ OR add to your `package.json`:
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { CloudStorageModule } from '@vinayak-patil/cloud-storage';
+import { CloudStorageModule } from '@tekdi/nestjs-cloud-storage';
 
 @Module({
   imports: [
@@ -76,7 +76,7 @@ export class AppModule {}
 
 ```typescript
 import { Injectable, Inject } from '@nestjs/common';
-import { CloudStorageService } from '@vinayak-patil/cloud-storage';
+import { CloudStorageService } from '@tekdi/nestjs-cloud-storage';
 
 @Injectable()
 export class YourService {
